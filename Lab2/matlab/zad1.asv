@@ -1,0 +1,41 @@
+clear all
+close all
+clc
+
+wzorce
+
+D1 = {A_1, A_2, A_3}
+
+D = wzorce2mat(D1)
+D = char2mat(D)
+
+
+net = newhop(D);
+
+
+W = D*D' / length(D1);
+
+
+
+P = 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
