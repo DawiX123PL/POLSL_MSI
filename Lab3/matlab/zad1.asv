@@ -1,0 +1,30 @@
+clear all
+close all
+clc
+
+
+
+d1 = randn(2,100);
+d2 = randn(2,100) + [9;2];
+d3 = randn(2,100) + [5;5];
+
+d = {d1,d2,d3};
+n = size(d,2);
+
+d_temp = [d1,d2,d3];
+
+
+
+plot(d(1,:), d(2,:), '.')
+
+%%
+
+net = selforgmap([1 n])
+net = train(net,d)
+hold on
+plot( net.Iw{1}(:,1), net.Iw{1}(:,2), 'o')
+
+%distances = dist(d, net, )
+
+
+
