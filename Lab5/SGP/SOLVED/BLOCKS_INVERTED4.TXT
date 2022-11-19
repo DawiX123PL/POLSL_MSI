@@ -1,0 +1,45 @@
+nternational Allegro CL Lite 5.0.1 [Windows/x86] (8/3/99 13:33)
+Copyright (C) 1985-1999, Franz Inc., Berkeley, CA, USA.  All Rights Reserved.
+CG/IDE Version: 1.323.2.169
+
+[changing package from "COMMON-LISP-USER" to "COMMON-GRAPHICS-USER"]
+
+> 
+; Loading C:\Program Files\acl501lite\loader.lisp
+
+> (load-gp)
+Warning: Creating fasl files not available in Allegro CL Lite
+
+;;; Compiling file C:\Program Files\acl501lite\loader.lisp
+; While compiling (:TOP-LEVEL-FORM "loader.lisp" 2075):
+Warning: compile-file found "IMPORT" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+NIL
+> (load-gp)
+; Loading domains
+; Loading C:\Program Files\acl501lite\.\domains.lisp
+; Loading logic
+; Loading C:\Program Files\acl501lite\.\logic.lisp
+; Loading gp
+; Loading C:\Program Files\acl501lite\.\gp.lisp
+; Loading sgp
+; Loading C:\Program Files\acl501lite\.\sgp.lisp
+NIL
+> (in-package :gp)
+#<The GP package>
+> (load-domains "blocks-world.pddl")
+; Loading C:\Program Files\acl501lite\.\domains\blocks-world.pddl
+;   Warning: unable to process parameter(s), :AXIOM, in domain MCD-BLOCKSWORLD-AXIOM
+T
+> (plan 'tower-invert4)
+Operators are ground at graph expansion time
+Dynamic variable ordering is enabled
+Least preconditional action ordering is enabled
+
+Levels 1 2 3 4 5 6
+(((DOMAINS::PUTON DOMAINS::A DOMAINS::TABLE DOMAINS::B))
+ ((DOMAINS::PUTON DOMAINS::B DOMAINS::TABLE DOMAINS::C))
+ ((DOMAINS::PUTON DOMAINS::C DOMAINS::B DOMAINS::D))
+ ((DOMAINS::PUTON DOMAINS::D DOMAINS::A DOMAINS::TABLE))
+ ((DOMAINS::PUTON DOMAINS::C DOMAINS::D DOMAINS::B))
+ ((DOMAINS::PUTON DOMAINS::B DOMAINS::C DOMAINS::TABLE)))
+> 

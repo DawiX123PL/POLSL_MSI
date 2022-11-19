@@ -1,0 +1,409 @@
+(define (domain galuszka1)
+  (:requirements :strips :uncertainty :typing :conditional-effects)
+  (:predicates (on ?x ?y)
+	       (on-table ?x)
+	       (clear ?x)
+	       (arm-empty)
+	       (holding ?x)
+	       )
+  (:action pick-up
+	     :parameters (?ob1)
+	     :precondition (and (clear ?ob1) (on-table ?ob1) (arm-empty))
+	     :effect
+	     (and (not (on-table ?ob1))
+		   (not (clear ?ob1))
+		   (not (arm-empty))
+		   (holding ?ob1)))
+  (:action put-down
+	     :parameters (?ob)
+	     :precondition (holding ?ob)
+	     :effect
+	     (and (not (holding ?ob))
+		   (clear ?ob)
+		   (arm-empty)
+		   (on-table ?ob)))
+  (:action stack
+	     :parameters (?sob ?sunderob)
+	     :precondition (and (holding ?sob) (clear ?sunderob))
+	     :effect
+	     (and (not (holding ?sob))
+		   (not (clear ?sunderob))
+		   (clear ?sob)
+		   (arm-empty)
+		   (on ?sob ?sunderob)))
+  (:action unstack
+	     :parameters (?x)
+	     :precondition (and (clear ?x) (arm-empty))
+	     :effect
+	     (and (holding ?x) (not (clear ?x)) (not (arm-empty))
+		  (when (on ?x C)
+		        (and (clear C) (not (on ?x C)) ) ) 
+	          (when (on ?x D)  
+		        (and (clear D) (not (on ?x D)) ) ) ))
+  )
+
+
+======================================================================
+
+
+(define (problem simple2)
+    (:domain galuszka1)
+  (:objects A B C D)
+  (:init (clear A) (clear B) (arm-empty) (on-table C) (on-table D) 
+		(or (and (on A C) (on B D) (not(on A D)) (not(on B C)) )
+		    (and (not(on A C)) (not(on B D)) (on A D) (on B C) ) )
+)
+  (:goal (and (on D B) (on-table B) (on A C) (on-table C) ) ))
+
+==============   SOLUTION  ===========================================
+
+> (plan 'simple2)
+Using backtracking CSP solver
+Using induced mutexes
+2 contexts
+Contexts:
+--- 1 ---
+     (OBJECT A)
+     (OBJECT B)
+     (OBJECT C)
+     (OBJECT D)
+     (ON B C)
+     (ON A D)
+     (NOT (ON B D))
+     (NOT (ON A C))
+     (ON-TABLE D)
+     (ON-TABLE C)
+     (ARM-EMPTY)
+     (CLEAR B)
+     (CLEAR A)
+--- 2 ---
+     (OBJECT A)
+     (OBJECT B)
+     (OBJECT C)
+     (OBJECT D)
+     (ON A C)
+     (ON B D)
+     (NOT (ON A D))
+     (NOT (ON B C))
+     (ON-TABLE D)
+     (ON-TABLE C)
+     (ARM-EMPTY)
+     (CLEAR B)
+     (CLEAR A)
+
+Levels
+***** 1 *****
+Expanding graph...
+; cpu time (non-gc) 10,270 msec user, 0 msec system
+; cpu time (gc)     660 msec user, 0 msec system
+; cpu time (total)  10,930 msec user, 0 msec system
+; real time  10,930 msec
+; space allocation:
+;  427,384 cons cells, 2,207 symbols, 504,200 other bytes, 0 static bytes
+Actions:  22  Propositions:  20
+Backward searching...
+; cpu time (non-gc) 0 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  0 msec user, 0 msec system
+; real time  0 msec
+; space allocation:
+;  331 cons cells, 1 symbol, 368 other bytes, 0 static bytes
+***** 2 *****
+Expanding graph...
+; cpu time (non-gc) 13,500 msec user, 0 msec system
+; cpu time (gc)     1,880 msec user, 0 msec system
+; cpu time (total)  15,380 msec user, 0 msec system
+; real time  15,380 msec
+; space allocation:
+;  1,260,035 cons cells, 6,492 symbols, 1,555,352 other bytes, 0 static bytes
+Actions:  52  Propositions:  28
+Backward searching...
+; cpu time (non-gc) 0 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  0 msec user, 0 msec system
+; real time  0 msec
+; space allocation:
+;  331 cons cells, 1 symbol, 368 other bytes, 0 static bytes
+***** 3 *****
+Expanding graph...
+; cpu time (non-gc) 22,350 msec user, 0 msec system
+; cpu time (gc)     2,640 msec user, 0 msec system
+; cpu time (total)  24,990 msec user, 0 msec system
+; real time  24,990 msec
+; space allocation:
+;  2,190,645 cons cells, 11,003 symbols, 2,746,792 other bytes, 0 static bytes
+Actions:  80  Propositions:  34
+Backward searching...
+; cpu time (non-gc) 60 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  60 msec user, 0 msec system
+; real time  60 msec
+; space allocation:
+;  331 cons cells, 1 symbol, 368 other bytes, 0 static bytes
+***** 4 *****
+Expanding graph...
+; cpu time (non-gc) 39,530 msec user, 0 msec system
+; cpu time (gc)     4,690 msec user, 0 msec system
+; cpu time (total)  44,220 msec user, 0 msec system
+; real time  44,220 msec
+; space allocation:
+;  3,824,515 cons cells, 19,179 symbols, 5,006,616 other bytes, 0 static bytes
+Actions:  108  Propositions:  40
+Backward searching...
+; cpu time (non-gc) 60 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  60 msec user, 0 msec system
+; real time  60 msec
+; space allocation:
+;  1,510 cons cells, 6 symbols, 1,568 other bytes, 0 static bytes
+***** 5 *****
+Expanding graph...
+; cpu time (non-gc) 46,640 msec user, 0 msec system
+; cpu time (gc)     5,490 msec user, 0 msec system
+; cpu time (total)  52,130 msec user, 0 msec system
+; real time  52,130 msec
+; space allocation:
+;  4,521,019 cons cells, 22,216 symbols, 5,853,160 other bytes, 0 static bytes
+Actions:  132  Propositions:  42
+Backward searching...
+; cpu time (non-gc) 0 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  0 msec user, 0 msec system
+; real time  0 msec
+; space allocation:
+;  2,576 cons cells, 9 symbols, 3,536 other bytes, 0 static bytes
+***** 6 *****
+Expanding graph...
+; cpu time (non-gc) 44,440 msec user, 0 msec system
+; cpu time (gc)     5,000 msec user, 0 msec system
+; cpu time (total)  49,440 msec user, 0 msec system
+; real time  49,440 msec
+; space allocation:
+;  4,320,463 cons cells, 20,599 symbols, 5,743,128 other bytes, 0 static bytes
+Actions:  136  Propositions:  42
+Backward searching...
+; cpu time (non-gc) 2,860 msec user, 0 msec system
+; cpu time (gc)     330 msec user, 0 msec system
+; cpu time (total)  3,190 msec user, 0 msec system
+; real time  3,190 msec
+; space allocation:
+;  231,505 cons cells, 975 symbols, 410,200 other bytes, 0 static bytes
+((((DOMAINS::UNSTACK DOMAINS::B))) (((DOMAINS::PUT-DOWN DOMAINS::B)))
+ (((DOMAINS::UNSTACK DOMAINS::A))) (((DOMAINS::STACK DOMAINS::A DOMAINS::C)))
+ (((DOMAINS::PICK-UP DOMAINS::D))) (((DOMAINS::STACK DOMAINS::D DOMAINS::B))))
+> 
+
+======================================================================
+
+(define (problem simple3)
+    (:domain galuszka1)
+  (:objects A B C D)
+  (:init (clear A) (clear B) (arm-empty) (on-table C) (on-table D) 
+		(or (and (on A C) (on B D) (not(on A D)) (not(on B C)) )
+		    (and (not(on A C)) (not(on B D)) (on A D) (on B C) ) )
+)
+  (:goal (and (on D B) (on-table B) (on A C) (on C D) ) ))
+
+==============  SOLUTION  ============================================
+
+> (plan 'simple3)
+Using backtracking CSP solver
+Using induced mutexes
+2 contexts
+Contexts:
+--- 1 ---
+     (OBJECT A)
+     (OBJECT B)
+     (OBJECT C)
+     (OBJECT D)
+     (ON B C)
+     (ON A D)
+     (NOT (ON B D))
+     (NOT (ON A C))
+     (ON-TABLE D)
+     (ON-TABLE C)
+     (ARM-EMPTY)
+     (CLEAR B)
+     (CLEAR A)
+--- 2 ---
+     (OBJECT A)
+     (OBJECT B)
+     (OBJECT C)
+     (OBJECT D)
+     (ON A C)
+     (ON B D)
+     (NOT (ON A D))
+     (NOT (ON B C))
+     (ON-TABLE D)
+     (ON-TABLE C)
+     (ARM-EMPTY)
+     (CLEAR B)
+     (CLEAR A)
+
+Levels
+***** 1 *****
+Expanding graph...
+; cpu time (non-gc) 4,340 msec user, 0 msec system
+; cpu time (gc)     660 msec user, 0 msec system
+; cpu time (total)  5,000 msec user, 0 msec system
+; real time  5,000 msec
+; space allocation:
+;  427,369 cons cells, 2,207 symbols, 504,200 other bytes, 0 static bytes
+Actions:  22  Propositions:  20
+Backward searching...
+; cpu time (non-gc) 0 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  0 msec user, 0 msec system
+; real time  0 msec
+; space allocation:
+;  331 cons cells, 1 symbol, 368 other bytes, 0 static bytes
+***** 2 *****
+Expanding graph...
+; cpu time (non-gc) 12,920 msec user, 0 msec system
+; cpu time (gc)     1,580 msec user, 0 msec system
+; cpu time (total)  14,500 msec user, 0 msec system
+; real time  14,500 msec
+; space allocation:
+;  1,260,030 cons cells, 6,492 symbols, 1,555,256 other bytes, 0 static bytes
+Actions:  52  Propositions:  28
+Backward searching...
+; cpu time (non-gc) 0 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  0 msec user, 0 msec system
+; real time  0 msec
+; space allocation:
+;  331 cons cells, 1 symbol, 368 other bytes, 0 static bytes
+***** 3 *****
+Expanding graph...
+; cpu time (non-gc) 22,460 msec user, 0 msec system
+; cpu time (gc)     2,480 msec user, 0 msec system
+; cpu time (total)  24,940 msec user, 0 msec system
+; real time  24,940 msec
+; space allocation:
+;  2,190,640 cons cells, 11,003 symbols, 2,746,792 other bytes, 0 static bytes
+Actions:  80  Propositions:  34
+Backward searching...
+; cpu time (non-gc) 0 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  0 msec user, 0 msec system
+; real time  0 msec
+; space allocation:
+;  331 cons cells, 1 symbol, 368 other bytes, 0 static bytes
+***** 4 *****
+Expanding graph...
+; cpu time (non-gc) 39,700 msec user, 0 msec system
+; cpu time (gc)     4,410 msec user, 0 msec system
+; cpu time (total)  44,110 msec user, 0 msec system
+; real time  44,110 msec
+; space allocation:
+;  3,824,515 cons cells, 19,179 symbols, 5,006,616 other bytes, 0 static bytes
+Actions:  108  Propositions:  40
+Backward searching...
+; cpu time (non-gc) 0 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  0 msec user, 0 msec system
+; real time  0 msec
+; space allocation:
+;  1,510 cons cells, 6 symbols, 1,568 other bytes, 0 static bytes
+***** 5 *****
+Expanding graph...
+; cpu time (non-gc) 46,570 msec user, 0 msec system
+; cpu time (gc)     5,220 msec user, 0 msec system
+; cpu time (total)  51,790 msec user, 0 msec system
+; real time  51,790 msec
+; space allocation:
+;  4,521,014 cons cells, 22,216 symbols, 5,853,064 other bytes, 0 static bytes
+Actions:  132  Propositions:  42
+Backward searching...
+; cpu time (non-gc) 0 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  0 msec user, 0 msec system
+; real time  0 msec
+; space allocation:
+;  2,576 cons cells, 9 symbols, 3,536 other bytes, 0 static bytes
+***** 6 *****
+Expanding graph...
+; cpu time (non-gc) 44,480 msec user, 0 msec system
+; cpu time (gc)     5,280 msec user, 0 msec system
+; cpu time (total)  49,760 msec user, 0 msec system
+; real time  49,760 msec
+; space allocation:
+;  4,320,468 cons cells, 20,599 symbols, 5,743,224 other bytes, 0 static bytes
+Actions:  136  Propositions:  42
+Backward searching...
+; cpu time (non-gc) 0 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  0 msec user, 0 msec system
+; real time  0 msec
+; space allocation:
+;  3,642 cons cells, 12 symbols, 5,504 other bytes, 0 static bytes
+***** 7 *****
+Expanding graph...
+; cpu time (non-gc) 43,590 msec user, 0 msec system
+; cpu time (gc)     5,130 msec user, 0 msec system
+; cpu time (total)  48,720 msec user, 0 msec system
+; real time  48,720 msec
+; space allocation:
+;  4,227,907 cons cells, 20,115 symbols, 5,432,872 other bytes, 0 static bytes
+Actions:  140  Propositions:  42
+Backward searching...
+; cpu time (non-gc) 110 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  110 msec user, 0 msec system
+; real time  110 msec
+; space allocation:
+;  10,068 cons cells, 52 symbols, 16,600 other bytes, 0 static bytes
+***** 8 *****
+Expanding graph...
+; cpu time (non-gc) 45,880 msec user, 0 msec system
+; cpu time (gc)     5,150 msec user, 0 msec system
+; cpu time (total)  51,030 msec user, 0 msec system
+; real time  51,030 msec
+; space allocation:
+;  4,433,174 cons cells, 20,437 symbols, 5,972,168 other bytes, 0 static bytes
+Actions:  140  Propositions:  42
+Backward searching...
+; cpu time (non-gc) 880 msec user, 0 msec system
+; cpu time (gc)     0 msec user, 0 msec system
+; cpu time (total)  880 msec user, 0 msec system
+; real time  880 msec
+; space allocation:
+;  77,549 cons cells, 314 symbols, 139,840 other bytes, 0 static bytes
+***** 9 *****
+Expanding graph...
+; cpu time (non-gc) 43,220 msec user, 0 msec system
+; cpu time (gc)     5,010 msec user, 0 msec system
+; cpu time (total)  48,230 msec user, 0 msec system
+; real time  48,230 msec
+; space allocation:
+;  4,201,253 cons cells, 19,931 symbols, 5,415,448 other bytes, 0 static bytes
+Actions:  140  Propositions:  42
+Backward searching...
+; cpu time (non-gc) 22,720 msec user, 0 msec system
+; cpu time (gc)     3,590 msec user, 0 msec system
+; cpu time (total)  26,310 msec user, 0 msec system
+; real time  26,310 msec
+; space allocation:
+;  2,030,763 cons cells, 7,936 symbols, 4,072,408 other bytes, 0 static bytes
+***** 10 *****
+Expanding graph...
+; cpu time (non-gc) 45,820 msec user, 0 msec system
+; cpu time (gc)     5,260 msec user, 0 msec system
+; cpu time (total)  51,080 msec user, 0 msec system
+; real time  51,080 msec
+; space allocation:
+;  4,433,169 cons cells, 20,437 symbols, 5,972,168 other bytes, 0 static bytes
+Actions:  140  Propositions:  42
+Backward searching...
+; cpu time (non-gc) 13,350 msec user, 0 msec system
+; cpu time (gc)     2,250 msec user, 0 msec system
+; cpu time (total)  15,600 msec user, 0 msec system
+; real time  15,600 msec
+; space allocation:
+;  1,186,452 cons cells, 4,990 symbols, 2,260,928 other bytes, 0 static bytes
+((((DOMAINS::UNSTACK DOMAINS::B))) (((DOMAINS::PUT-DOWN DOMAINS::B)))
+ (((DOMAINS::UNSTACK DOMAINS::A))) (((DOMAINS::PUT-DOWN DOMAINS::A)))
+ (((DOMAINS::PICK-UP DOMAINS::D))) (((DOMAINS::STACK DOMAINS::D DOMAINS::B)))
+ (((DOMAINS::PICK-UP DOMAINS::C))) (((DOMAINS::STACK DOMAINS::C DOMAINS::D)))
+ (((DOMAINS::PICK-UP DOMAINS::A))) (((DOMAINS::STACK DOMAINS::A DOMAINS::C))))
+> 

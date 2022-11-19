@@ -1,0 +1,480 @@
+>(in-package :gp)
+
+
+>(load-domains "gripper.pddl")
+
+> (load-domains "gripper.pddl")
+; Loading C:\Program Files\acl501lite\.\domains\gripper.pddl
+T
+> (plan 'gripper2) (plan 'gripper2)
+Operators are ground at graph expansion time
+Dynamic variable ordering is enabled
+Least preconditional action ordering is enabled
+
+Levels 1 2 3
+(((DOMAINS::PICK DOMAINS::BALL2 DOMAINS::ROOMA DOMAINS::RIGHT)
+  (DOMAINS::PICK DOMAINS::BALL1 DOMAINS::ROOMA DOMAINS::LEFT))
+ ((DOMAINS::MOVE DOMAINS::ROOMA DOMAINS::ROOMB))
+ ((DOMAINS::DROP DOMAINS::BALL1 DOMAINS::ROOMB DOMAINS::LEFT)
+  (DOMAINS::DROP DOMAINS::BALL2 DOMAINS::ROOMB DOMAINS::RIGHT)))
+> (in-package :sgp)
+#<The SGP package>
+> (load "domains/bt.lisp")
+; Loading C:\Program Files\acl501lite\domains\bt.lisp
+T
+> (trace-gp contexts)
+NIL
+> (plan 'bt-2sa)
+Using backtracking CSP solver
+Using induced mutexes
+5 contexts
+Contexts:
+--- 1 ---
+     (OBJECT PKG1)
+     (OBJECT PKG2)
+     (OBJECT PKG3)
+     (OBJECT PKG4)
+     (OBJECT PKG5)
+     (OBJECT TOILET1)
+     (ODOR-OF-EXPLOSIVES PKG5)
+     (NOT (ODOR-OF-EXPLOSIVES PKG4))
+     (NOT (ODOR-OF-EXPLOSIVES PKG3))
+     (NOT (ODOR-OF-EXPLOSIVES PKG2))
+     (NOT (ODOR-OF-EXPLOSIVES PKG1))
+     (METAL PKG5)
+     (NOT (METAL PKG4))
+     (NOT (METAL PKG3))
+     (NOT (METAL PKG2))
+     (NOT (METAL PKG1))
+     (IN PKG5)
+     (NOT (IN PKG1))
+     (NOT (IN PKG2))
+     (NOT (IN PKG3))
+     (NOT (IN PKG4))
+     (ARMED)
+     (TOILET TOILET1)
+     (NOT (CLOGGED TOILET1))
+--- 2 ---
+     (OBJECT PKG1)
+     (OBJECT PKG2)
+     (OBJECT PKG3)
+     (OBJECT PKG4)
+     (OBJECT PKG5)
+     (OBJECT TOILET1)
+     (NOT (ODOR-OF-EXPLOSIVES PKG5))
+     (ODOR-OF-EXPLOSIVES PKG4)
+     (NOT (ODOR-OF-EXPLOSIVES PKG3))
+     (NOT (ODOR-OF-EXPLOSIVES PKG2))
+     (NOT (ODOR-OF-EXPLOSIVES PKG1))
+     (NOT (METAL PKG5))
+     (METAL PKG4)
+     (NOT (METAL PKG3))
+     (NOT (METAL PKG2))
+     (NOT (METAL PKG1))
+     (NOT (IN PKG5))
+     (IN PKG4)
+     (NOT (IN PKG1))
+     (NOT (IN PKG2))
+     (NOT (IN PKG3))
+     (ARMED)
+     (TOILET TOILET1)
+     (NOT (CLOGGED TOILET1))
+--- 3 ---
+     (OBJECT PKG1)
+     (OBJECT PKG2)
+     (OBJECT PKG3)
+     (OBJECT PKG4)
+     (OBJECT PKG5)
+     (OBJECT TOILET1)
+     (NOT (ODOR-OF-EXPLOSIVES PKG5))
+     (NOT (ODOR-OF-EXPLOSIVES PKG4))
+     (ODOR-OF-EXPLOSIVES PKG3)
+     (NOT (ODOR-OF-EXPLOSIVES PKG2))
+     (NOT (ODOR-OF-EXPLOSIVES PKG1))
+     (NOT (METAL PKG5))
+     (NOT (METAL PKG4))
+     (METAL PKG3)
+     (NOT (METAL PKG2))
+     (NOT (METAL PKG1))
+     (NOT (IN PKG5))
+     (NOT (IN PKG4))
+     (IN PKG3)
+     (NOT (IN PKG1))
+     (NOT (IN PKG2))
+     (ARMED)
+     (TOILET TOILET1)
+     (NOT (CLOGGED TOILET1))
+--- 4 ---
+     (OBJECT PKG1)
+     (OBJECT PKG2)
+     (OBJECT PKG3)
+     (OBJECT PKG4)
+     (OBJECT PKG5)
+     (OBJECT TOILET1)
+     (NOT (ODOR-OF-EXPLOSIVES PKG5))
+     (NOT (ODOR-OF-EXPLOSIVES PKG4))
+     (NOT (ODOR-OF-EXPLOSIVES PKG3))
+     (ODOR-OF-EXPLOSIVES PKG2)
+     (NOT (ODOR-OF-EXPLOSIVES PKG1))
+     (NOT (METAL PKG5))
+     (NOT (METAL PKG4))
+     (NOT (METAL PKG3))
+     (METAL PKG2)
+     (NOT (METAL PKG1))
+     (NOT (IN PKG5))
+     (NOT (IN PKG4))
+     (NOT (IN PKG3))
+     (IN PKG2)
+     (NOT (IN PKG1))
+     (ARMED)
+     (TOILET TOILET1)
+     (NOT (CLOGGED TOILET1))
+--- 5 ---
+     (OBJECT PKG1)
+     (OBJECT PKG2)
+     (OBJECT PKG3)
+     (OBJECT PKG4)
+     (OBJECT PKG5)
+     (OBJECT TOILET1)
+     (NOT (ODOR-OF-EXPLOSIVES PKG5))
+     (NOT (ODOR-OF-EXPLOSIVES PKG4))
+     (NOT (ODOR-OF-EXPLOSIVES PKG3))
+     (NOT (ODOR-OF-EXPLOSIVES PKG2))
+     (ODOR-OF-EXPLOSIVES PKG1)
+     (NOT (METAL PKG5))
+     (NOT (METAL PKG4))
+     (NOT (METAL PKG3))
+     (NOT (METAL PKG2))
+     (METAL PKG1)
+     (NOT (IN PKG5))
+     (NOT (IN PKG4))
+     (NOT (IN PKG3))
+     (NOT (IN PKG2))
+     (IN PKG1)
+     (ARMED)
+     (TOILET TOILET1)
+     (NOT (CLOGGED TOILET1))
+
+Levels
+***** 1 *****
+Actions:  85  Propositions:  9
+***** 2 *****
+Actions:  145  Propositions:  9
+((((DOMAINS::DETECT-METAL DOMAINS::PKG1))
+  ((DOMAINS::DETECT-METAL DOMAINS::PKG2))
+  ((DOMAINS::DETECT-METAL DOMAINS::PKG3))
+  ((DOMAINS::DETECT-METAL DOMAINS::PKG4)))
+ (((DOMAINS::DUNK DOMAINS::PKG1 DOMAINS::TOILET1) 1 2 3 4)
+  ((DOMAINS::DUNK DOMAINS::PKG2 DOMAINS::TOILET1) 1 2 3 5)
+  ((DOMAINS::DUNK DOMAINS::PKG3 DOMAINS::TOILET1) 1 2 4 5)
+  ((DOMAINS::DUNK DOMAINS::PKG4 DOMAINS::TOILET1) 1 3 4 5)
+  ((DOMAINS::DUNK DOMAINS::PKG5 DOMAINS::TOILET1) 2 3 4 5)))
+> 
+
+==============================================================
+
+
+> (plan 'bt-dd3)
+Using backtracking CSP solver
+Using induced mutexes
+4 contexts
+Contexts:
+--- 1 ---
+     (OBJECT B)
+     (OBJECT P1)
+     (OBJECT P2)
+     (NOT (IN P1 B))
+     (NOT (IN P2 B))
+     (BOMB B)
+     (PACKAGE P2)
+     (PACKAGE P1)
+--- 2 ---
+     (OBJECT B)
+     (OBJECT P1)
+     (OBJECT P2)
+     (NOT (IN P1 B))
+     (IN P2 B)
+     (BOMB B)
+     (PACKAGE P2)
+     (PACKAGE P1)
+--- 3 ---
+     (OBJECT B)
+     (OBJECT P1)
+     (OBJECT P2)
+     (IN P1 B)
+     (NOT (IN P2 B))
+     (BOMB B)
+     (PACKAGE P2)
+     (PACKAGE P1)
+--- 4 ---
+     (OBJECT B)
+     (OBJECT P1)
+     (OBJECT P2)
+     (IN P1 B)
+     (IN P2 B)
+     (BOMB B)
+     (PACKAGE P2)
+     (PACKAGE P1)
+
+Levels
+***** 1 *****
+          (IN P1 B){4}
+          (IN P1 B){3}
+          (IN P2 B){4}
+          (IN P2 B){2}
+          (NOT (IN P2 B)){3}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P1 B)){1}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+          (DEFUSED B){3}
+          (DEFUSED B){4}
+          (DEFUSED B){2}
+Actions:  16  Propositions:  5
+***** 2 *****
+          (DEFUSED B){3}
+          (DEFUSED B){4}
+          (DEFUSED B){2}
+          (NOT (IN P1 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P2 B)){3}
+          (IN P2 B){2}
+          (IN P2 B){4}
+          (IN P1 B){3}
+          (IN P1 B){4}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+Actions:  19  Propositions:  5
+***** 3 *****
+          (IN P1 B){4}
+          (IN P1 B){3}
+          (IN P2 B){4}
+          (IN P2 B){2}
+          (NOT (IN P2 B)){3}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P1 B)){1}
+          (DEFUSED B){2}
+          (DEFUSED B){4}
+          (DEFUSED B){3}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+Actions:  19  Propositions:  5
+***** 4 *****
+          (DEFUSED B){3}
+          (DEFUSED B){4}
+          (DEFUSED B){2}
+          (NOT (IN P1 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P2 B)){3}
+          (IN P2 B){2}
+          (IN P2 B){4}
+          (IN P1 B){3}
+          (IN P1 B){4}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+Actions:  19  Propositions:  5
+***** 5 *****
+          (IN P1 B){4}
+          (IN P1 B){3}
+          (IN P2 B){4}
+          (IN P2 B){2}
+          (NOT (IN P2 B)){3}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P1 B)){1}
+          (DEFUSED B){2}
+          (DEFUSED B){4}
+          (DEFUSED B){3}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+Actions:  19  Propositions:  5
+***** 6 *****
+          (DEFUSED B){3}
+          (DEFUSED B){4}
+          (DEFUSED B){2}
+          (NOT (IN P1 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P2 B)){3}
+          (IN P2 B){2}
+          (IN P2 B){4}
+          (IN P1 B){3}
+          (IN P1 B){4}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+Actions:  19  Propositions:  5
+***** 7 *****
+          (IN P1 B){4}
+          (IN P1 B){3}
+          (IN P2 B){4}
+          (IN P2 B){2}
+          (NOT (IN P2 B)){3}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P1 B)){1}
+          (DEFUSED B){2}
+          (DEFUSED B){4}
+          (DEFUSED B){3}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+Actions:  19  Propositions:  5
+***** 8 *****
+          (DEFUSED B){3}
+          (DEFUSED B){4}
+          (DEFUSED B){2}
+          (NOT (IN P1 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P2 B)){3}
+          (IN P2 B){2}
+          (IN P2 B){4}
+          (IN P1 B){3}
+          (IN P1 B){4}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+Actions:  19  Propositions:  5
+***** 9 *****
+          (IN P1 B){4}
+          (IN P1 B){3}
+          (IN P2 B){4}
+          (IN P2 B){2}
+          (NOT (IN P2 B)){3}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P1 B)){1}
+          (DEFUSED B){2}
+          (DEFUSED B){4}
+          (DEFUSED B){3}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+Actions:  19  Propositions:  5
+***** 10 *****
+          (DEFUSED B){3}
+          (DEFUSED B){4}
+          (DEFUSED B){2}
+          (NOT (IN P1 B)){1}
+          (NOT (IN P1 B)){2}
+          (NOT (IN P2 B)){1}
+          (NOT (IN P2 B)){3}
+          (IN P2 B){2}
+          (IN P2 B){4}
+          (IN P1 B){3}
+          (IN P1 B){4}
+          (NOT (IN P2 B)){1} (OBJECT P2){1} (PACKAGE P2){1} (BOMB B){1}  --> $(DUNK P2)$ --> 
+          (IN P2 B){2} (OBJECT P2){2} (PACKAGE P2){2} (BOMB B){2}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){2} 
+          (NOT (IN P2 B)){3} (OBJECT P2){3} (PACKAGE P2){3} (BOMB B){3}  --> $(DUNK P2)$ --> 
+          (IN P2 B){4} (OBJECT P2){4} (PACKAGE P2){4} (BOMB B){4}  --> (DUNK
+                                                                        P2) --> (DEFUSED B){4} 
+          (NOT (IN P1 B)){1} (OBJECT P1){1} (PACKAGE P1){1} (BOMB B){1}  --> $(DUNK P1)$ --> 
+          (NOT (IN P1 B)){2} (OBJECT P1){2} (PACKAGE P1){2} (BOMB B){2}  --> $(DUNK P1)$ --> 
+          (IN P1 B){3} (OBJECT P1){3} (PACKAGE P1){3} (BOMB B){3}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){3} 
+          (IN P1 B){4} (OBJECT P1){4} (PACKAGE P1){4} (BOMB B){4}  --> (DUNK
+                                                                        P1) --> (DEFUSED B){4} 
+    new propositions: 
+Actions:  19  Propositions:  5
+NIL
